@@ -1,28 +1,104 @@
-REMIX DEFAULT WORKSPACE
+# MuNFT – Advanced NFT System with Breeding & Tier Mechanics
 
-Remix default workspace is present when:
-i. Remix loads for the very first time 
-ii. A new workspace is created with 'Default' template
-iii. There are no files existing in the File Explorer
+This project contains a complete smart contract system for creating, managing, and evolving NFTs based on item attributes, RPG-style progression, and genetic-style breeding. It also includes a custom ERC20 token (CZEN) with dynamic burn/restore logic.
 
-This workspace contains 3 directories:
+---
 
-1. 'contracts': Holds three contracts with increasing levels of complexity.
-2. 'scripts': Contains four typescript files to deploy a contract. It is explained below.
-3. 'tests': Contains one Solidity test file for 'Ballot' contract & one JS test file for 'Storage' contract.
+## 🧬 MuNFT – Tier-Based NFT Contract
 
-SCRIPTS
+`MuNFT.sol` is an ERC-721 NFT contract inspired by games like *Mu Online*. It allows for the minting of equipment NFTs, each with detailed attributes, and enables **breeding** of two NFTs into a more powerful one (higher tier).
 
-The 'scripts' folder has four typescript files which help to deploy the 'Storage' contract using 'web3.js' and 'ethers.js' libraries.
+### ✨ Features
 
-For the deployment of any other contract, just update the contract's name from 'Storage' to the desired contract and provide constructor arguments accordingly 
-in the file `deploy_with_ethers.ts` or  `deploy_with_web3.ts`
+- Custom minting with 5 flexible attributes + image and type
+- Tier system with breeding mechanics (only same-tier and same-type NFTs)
+- Burning of parent NFTs when breeding
+- On-chain attribute storage for each token ID
+- Randomized attribute inheritance
+- Admin-restricted tier 1 minting
 
-In the 'tests' folder there is a script containing Mocha-Chai unit tests for 'Storage' contract.
+### 🧪 Sample Structure
 
-To run a script, right click on file name in the file explorer and click 'Run'. Remember, Solidity file must already be compiled.
-Output from script will appear in remix terminal.
+```solidity
+struct ItemAttributes {
+    string name;
+    string att1;
+    string att2;
+    string att3;
+    string att4;
+    string att5;
+    string imageURL;
+    string typeItem;
+    uint8 tier;
+}
+```
 
-Please note, require/import is supported in a limited manner for Remix supported modules.
-For now, modules supported by Remix are ethers, web3, swarmgw, chai, multihashes, remix and hardhat only for hardhat.ethers object/plugin.
-For unsupported modules, an error like this will be thrown: '<module_name> module require is not supported by Remix IDE' will be shown.
+---
+
+## 🔥 CZENToken – Elastic Supply Token with Burn & Restore Logic
+
+`CZENToken.sol` is a custom ERC20 token that automatically **burns tokens** above a certain supply threshold and **restores tokens** when supply is too low.
+
+### 📊 Features
+
+- Total supply: 100,000,000 CZEN
+- Burn threshold: 50% of supply → triggers deflation
+- Restore threshold: 90% of supply → triggers inflation
+- Dynamic 2% burn (when above threshold)
+- 1.2% token restore (when below threshold)
+- Burned tokens are sent to the `0xdead` wallet
+- 20% of supply allocated to developers on deployment
+
+---
+
+## 🧱 Technologies Used
+
+- Solidity ^0.8.0
+- OpenZeppelin Contracts (ERC721 & ERC20)
+- Chainlink-style random via internal nonce
+- Compatible with Web3.js or Ethers.js frontends
+
+---
+
+## 🌐 Frontend Integration
+
+This contract is actively used in the companion Web3 marketplace:  
+👉 [`NFTMarketplace`](https://github.com/sbrunomello/NFTMarketplace)
+
+It provides minting, querying, selling and buying NFTs directly on the blockchain via Metamask.
+
+---
+
+## 📂 Project Structure
+
+```
+MuNFT.sol        → ERC721 NFT contract with breeding/tier logic
+CZENToken.sol    → ERC20 with burn/restore supply mechanics
+```
+
+---
+
+## ✅ How to Deploy
+
+1. Clone the repo and open in [Remix](https://remix.ethereum.org/)
+2. Deploy `CZENToken` by passing a developer wallet address.
+3. Deploy `MuNFT` – no constructor parameters needed.
+4. Interact directly or via external frontend (see link above).
+
+---
+
+## 🤝 Contributions
+
+Pull requests and ideas are welcome! You can fork and extend:
+
+- More attributes
+- Elemental types
+- Equipment fusion
+- Integration with games or 3D assets
+
+---
+
+## 📬 Contact
+
+- [GitHub](https://github.com/sbrunomello)  
+Developed with ⚔️ by Mello
